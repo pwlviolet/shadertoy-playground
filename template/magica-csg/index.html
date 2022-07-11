@@ -1,0 +1,17 @@
+<style>
+    body {
+        margin: 0
+    }
+</style>
+<shader-toy>
+    <script type="frag"></script>
+</shader-toy>
+<script src="https://unpkg.com/kokomi.js@1.9.24/build/kokomi.umd.js"></script>
+<script>
+    fetch(`./frag.glsl?v=${Math.random()}`)
+        .then((res) => res.text())
+        .then((res) => {
+            document.querySelector('[type=frag]').textContent = res;
+            kokomi.ShaderToyElement.register();
+        })
+</script>
