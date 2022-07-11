@@ -791,6 +791,7 @@ float fOpTongue(float a,float b,float ra,float rb){
     return min(a,max(a-ra,abs(b)-rb));
 }
 
+// basic raymarching stuff
 #define SHOW_ISOLINE 1
 
 // consts
