@@ -10,13 +10,11 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord)
     vec2 uv=fragCoord/iResolution.xy;
     float t=iTime;
     
-    vec2 st=uv;
+    float n=10.;
     
-    float x=2.*st.y+sin(t*5.);
-    st.x+=sin(t*10.)*.1*
-    sin(5.*x)*(-(x-1.)*(x-1.)+1.);
+    vec2 st=fract(uv*vec2(n));
     
-    float d=box(fract(st*10.),.8);
+    float d=box(st,abs(sin(t*2.)));
     
     vec3 col=vec3(d);
     
