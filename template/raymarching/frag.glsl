@@ -1,4 +1,4 @@
-#define SHOW_ISOLINE 1
+#define SHOW_ISOLINE 0
 
 // consts
 const float PI=3.14159265359;
