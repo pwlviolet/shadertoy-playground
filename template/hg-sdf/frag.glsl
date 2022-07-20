@@ -792,7 +792,7 @@ float fOpTongue(float a,float b,float ra,float rb){
 }
 
 // basic raymarching stuff
-#define SHOW_ISOLINE 1
+#define SHOW_ISOLINE 0
 
 // consts
 #define TWO_PI 6.28318530718
@@ -942,18 +942,13 @@ vec4 toGamma(vec4 v){
 }
 
 // sdf
-float sdSphere(vec3 p,float s)
-{
-    return length(p)-s;
-}
-
 vec2 map(in vec3 pos)
 {
     vec2 res=vec2(1e10,0.);
     
     {
         vec3 d1p=pos;
-        float d1=fSphere(d1p,.5);
+        float d1=fBox(d1p,vec3(.5));
         res=opUnion(res,vec2(d1,114514.));
     }
     
@@ -1002,11 +997,7 @@ vec3 drawIsoline(vec3 col,vec3 pos){
 }
 
 vec3 material(in vec3 col,in vec3 pos,in float m,in vec3 nor){
-    col=vec3(153.,204.,255.)/255.;
-    
-    if(m==1.){
-        col=vec3(0.,0.,0.)/255.;
-    }
+    col=vec3(1.);
     
     if(m==114514.){
         if(SHOW_ISOLINE==1){
@@ -1020,24 +1011,17 @@ vec3 material(in vec3 col,in vec3 pos,in float m,in vec3 nor){
 vec3 lighting(in vec3 col,in vec3 pos,in vec3 rd,in vec3 nor){
     vec3 lin=col;
     
-    // sun
     {
-        vec3 lig=normalize(vec3(1.,1.,1.));
-        float dif=diffuse(nor,lig);
-        float spe=specular(nor,lig,3.);
-        lin+=col*dif*spe;
-    }
-    
-    // sky
-    {
-        lin*=col*.7;
+        vec3 lig=normalize(vec3(1.,2.,3.));
+        float dif=dot(nor,lig)*.5+.5;
+        lin=col*dif;
     }
     
     return lin;
 }
 
 vec3 render(in vec3 ro,in vec3 rd){
-    vec3 col=vec3(10.,10.,10.)/255.;
+    vec3 col=vec3(0.);
     
     vec2 res=raycast(ro,rd);
     float t=res.x;
