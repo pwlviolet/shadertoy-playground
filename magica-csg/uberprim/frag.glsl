@@ -265,18 +265,18 @@ float sdUberprim(vec3 p,vec4 s,vec3 r){
     return sdUnterprim(p,s,r,ba/dot(ba,ba),ba.y);
 }
 
-float sdUberprim(vec3 p,vec4 s,vec3 r,vec3 scale,float zoom,float round,float shell,float hole)
+float sdUberprim(vec3 p,vec4 s,vec3 r,vec3 scale,float zoom,float round_,float shell,float hole)
 {
     if(hole>0.){
-        round*=(1.-hole*4.);
+        round_*=(1.-hole*4.);
     }
-    float rs=zoom-min(round,.99);
+    float rs=zoom-min(round_,.99);
     vec4 s2=vec4(s.xyz,s.w+.01);
     vec4 size=s2*vec4(scale,minSon(scale.xy));
     float minSide=minSon(size.xyz);
     float maxSide=maxSon(size.xyz);
     float ratio=minSide/maxSide;
-    float ro=ratio*round;
+    float ro=ratio*round_;
     float sh=ratio*shell;
     float dt=sdUberprim(p/rs/zoom,size,r)*rs*zoom;
     if(ro>0.){

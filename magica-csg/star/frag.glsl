@@ -256,16 +256,16 @@ float sdStar(in vec2 p,in float r,in int n,in float m){
     return length(p)*sign(p.x);
 }
 
-float sdStar(in vec3 pos,in float radius,in int edge,in float divisor,in vec3 scale,in float zoom,in float height,in float round,in float hole,in float shell){
+float sdStar(in vec3 pos,in float radius,in int edge,in float divisor,in float height,in vec3 scale,in float zoom,in float round_,in float shell,in float hole){
     if(hole>0.){
-        round*=(1.-hole*4.);
+        round_*=(1.-hole*4.);
     }
-    float rs=zoom-min(round,.99);
+    float rs=zoom-min(round_,.99);
     float sc=(scale.x+scale.y)/2.;
     float dt=sdStar(pos.xy/rs/sc,radius,edge,divisor)*rs*sc;
-    if(round>0.){
+    if(round_>0.){
         dt*=2.;
-        dt=opRound(dt,round);
+        dt=opRound(dt,round_);
         dt/=2.;
     }
     if(hole>0.){
@@ -288,8 +288,8 @@ vec2 map(in vec3 pos)
     
     {
         vec3 d1p=pos;
-        // float d1=sdStar(d1p,.5,6,2.,vec3(1.,1.,1.),1.,.5,0.,0.,0.);
-        float d1=sdStar(d1p,.5,6,2.,vec3(1.,1.,1.),1.,.5,.5,.125,0.);
+        // float d1=sdStar(d1p,.5,6,2.,.5,vec3(1.,1.,1.),1.,0.,0.,0.);
+        float d1=sdStar(d1p,.5,6,2.,.5,vec3(1.,1.,1.),1.,.5,0.,.125);
         res=opUnion(res,vec2(d1,114514.));
     }
     

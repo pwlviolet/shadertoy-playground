@@ -249,24 +249,24 @@ float sdRhombus(in vec2 p,in vec2 b)
 }
 
 // 由2DSDF挤压成3D的参数化SDF
-float sdRhombus(in vec3 pos,in vec2 size,in vec2 scale,in float zoom,in float height,in float round,in float hole,in float shell)
+float sdRhombus(in vec3 pos,in vec2 size,in float height,in vec2 scale,in float zoom,in float round_,in float shell,in float hole)
 {
     // 孔洞和圆角共存时会出问题
     // MagicaCSG的做法好像是孔洞存在时就减小圆角的影响
     if(hole>0.){
-        round*=(1.-hole*4.);
+        round_*=(1.-hole*4.);
     }
     // 让round的value足够大时物体看上去像个球体
-    float rs=zoom-min(round,.99);
+    float rs=zoom-min(round_,.99);
     // 处理xy轴的缩放
     float sc=minSon(scale);
     // 先生成2D的SDF
     float dt=sdRhombus(pos.xy/rs/scale,size)*rs*sc;
     // 圆角
-    if(round>0.){
+    if(round_>0.){
         // 让圆角看上去不会很大
         dt*=2.;
-        dt=opRound(dt,round);
+        dt=opRound(dt,round_);
         dt/=2.;
     }
     // 孔洞
@@ -292,8 +292,8 @@ vec2 map(in vec3 pos)
     
     {
         vec3 d1p=pos;
-        // float d1=sdRhombus(d1p,vec2(.5,.25),vec2(1.,1.),1.,.1,0.,0.,0.);
-        float d1=sdRhombus(d1p,vec2(.5,.25),vec2(1.,1.),1.,.1,.4,.15,0.);
+        // float d1=sdRhombus(d1p,vec2(.5,.25),.1,vec2(1.,1.),1.,0.,0.,0.);
+        float d1=sdRhombus(d1p,vec2(.5,.25),.1,vec2(1.,1.),1.,.4,0.,.15);
         res=opUnion(res,vec2(d1,114514.));
     }
     

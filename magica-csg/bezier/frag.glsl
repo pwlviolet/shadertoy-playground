@@ -283,16 +283,16 @@ float sdBezier(in vec2 pos,in vec2 A,in vec2 B,in vec2 C){
     return sqrt(res);
 }
 
-float sdBezier(in vec3 pos,in vec2 A,in vec2 B,in vec2 C,in vec2 size,in float height,in vec3 scale,in float zoom,in float round,in float hole,in float shell){
-    float rs=zoom-min(round,.99);
+float sdBezier(in vec3 pos,in vec2 A,in vec2 B,in vec2 C,in vec2 size,in float height,in vec3 scale,in float zoom,in float round_,in float shell,in float hole){
+    float rs=zoom-min(round_,.99);
     float sc=minSon(scale);
     vec2 v0=size*cos(A*PI);
     vec2 v1=size*cos(B*PI);
     vec2 v2=size*cos(C*PI);
     float dt=sdBezier(pos.xy/rs/scale.xy,v0,v1,v2)*rs*sc;
-    if(round>0.){
+    if(round_>0.){
         dt*=2.;
-        dt=opRound(dt,round);
+        dt=opRound(dt,round_);
         dt/=2.;
     }
     if(hole>0.){
@@ -317,7 +317,7 @@ vec2 map(in vec3 pos)
     {
         vec3 d1p=pos;
         // float d1=sdBezier(d1p,vec2(0.,0.),vec2(.5,1.),vec2(1.,0.),vec2(.5,.5),.5,vec3(1.,1.,1.),1.,0.,0.,0.);
-        float d1=sdBezier(d1p,vec2(0.,0.),vec2(.5,1.),vec2(1.,0.),vec2(.5,.5),.5,vec3(1.,1.,1.),1.,.5,.05,0.);
+        float d1=sdBezier(d1p,vec2(0.,0.),vec2(.5,1.),vec2(1.,0.),vec2(.5,.5),.5,vec3(1.,1.,1.),1.,.5,0.,.05);
         res=opUnion(res,vec2(d1,114514.));
     }
     
