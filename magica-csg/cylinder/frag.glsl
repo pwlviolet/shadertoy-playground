@@ -272,20 +272,27 @@ float sdCylinder(in vec3 pos,in vec2 size,in float height,in vec2 scale,in float
     }
     float rs=zoom-min(round_,.99);
     float sc=minSon(scale);
+    float minSide=minSon(size);
+    float maxSide=maxSon(size);
+    float ratio=minSide/maxSide;
+    float ro=ratio*round_;
+    float sh=ratio*shell;
     float dt=sdEllipse(pos.xy/rs/scale,size)*rs*sc;
-    if(round_>0.){
-        dt*=2.;
-        dt=opRound(dt,round_);
-        dt/=2.;
-    }
     if(hole>0.){
         float hp=hypot(size/2.);
-        float ho=hp-hole;
+        float ho=(hp-hole)*sc;
         dt=opShell(dt,ho);
     }
     dt=opExtrusion(pos,dt,height);
-    if(shell>0.){
-        dt=opShell(dt,shell);
+    if(round_>0.){
+        dt*=2.;
+        dt=opRound(dt,ro);
+        dt/=2.;
+    }
+    if(sh>0.){
+        float ed=.6;
+        float ho=(ed-sh*sc*.5)*.6;
+        dt=opShell(dt,ho);
     }
     return dt;
 }
