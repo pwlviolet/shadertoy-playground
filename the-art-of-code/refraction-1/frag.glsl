@@ -1,3 +1,4 @@
+// https://www.youtube.com/watch?v=NCpaaLkmXI8&ab_channel=TheArtofCode
 #define SHOW_ISOLINE 0
 
 // consts
@@ -226,27 +227,29 @@ vec3 material(in vec3 col,in vec3 pos,in float m,in vec3 nor){
     return col;
 }
 
+vec3 doRefract(in vec3 pos,in vec3 rd,in vec3 nor,in float t){
+    float ior=1.49;
+    vec3 rdIn=refract(rd,nor,1./ior);// ray direction when entering
+    
+    vec3 pEnter=pos-nor*.001*t*3.;
+    vec2 dIn=raycast(pEnter,rdIn,-1.);// inside the object
+    
+    vec3 pExit=pEnter+rdIn*dIn.x;// 3d position of exit
+    vec3 norExit=-calcNormal(pExit);
+    
+    vec3 rdOut=refract(rdIn,norExit,ior);
+    if(dot(rdOut,rdOut)==0.){
+        rdOut=reflect(rdIn,norExit);
+    }
+    return rdOut;
+}
+
 vec3 lighting(in vec3 col,in vec3 pos,in vec3 rd,in vec3 nor,in float t){
     vec3 lin=col;
     
     // refraction
     {
-        vec3 refleDir=reflect(rd,nor);
-        
-        float ior=1.49;
-        vec3 rdIn=refract(rd,nor,1./ior);// ray direction when entering
-        
-        vec3 pEnter=pos-nor*.001*t*3.;
-        vec2 dIn=raycast(pEnter,rdIn,-1.);// inside the object
-        
-        vec3 pExit=pEnter+rdIn*dIn.x;// 3d position of exit
-        vec3 norExit=-calcNormal(pExit);
-        
-        vec3 rdOut=refract(rdIn,norExit,ior);
-        if(dot(rdOut,rdOut)==0.){
-            rdOut=reflect(rdIn,norExit);
-        }
-        
+        vec3 rdOut=doRefract(pos,rd,nor,t);
         vec3 reflTex=texture(iChannel0Cube,rdOut).xyz;
         lin=reflTex;
     }
