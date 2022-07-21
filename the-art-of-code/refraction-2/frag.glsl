@@ -1,4 +1,8 @@
 // https://www.youtube.com/watch?v=0RWaR7zApEo&ab_channel=TheArtofCode
+#define IS_IN_SHADERTOY 0
+#if IS_IN_SHADERTOY==1
+#define iChannel0Cube iChannel0
+#endif
 #define SHOW_ISOLINE 0
 
 // consts
