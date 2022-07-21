@@ -293,7 +293,7 @@ vec3 lighting(in vec3 col,in vec3 pos,in vec3 rd,in vec3 nor,in float t){
         // vec3 rdOut=getRdOut(rdIn,norExit,ior);
         // reflTex=texture(iChannel0Cube,rdOut).xyz;
         
-        // Chromatic aberration
+        // Chromatic Aberration
         vec3 rUv=getRdOut(rdIn,norExit,ior-ca);
         vec3 gUv=getRdOut(rdIn,norExit,ior);
         vec3 bUv=getRdOut(rdIn,norExit,ior+ca);
