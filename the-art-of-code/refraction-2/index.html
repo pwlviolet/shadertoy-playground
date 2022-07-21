@@ -1,0 +1,24 @@
+<style>
+    body {
+        margin: 0
+    }
+</style>
+<shader-toy>
+    <img src="./iChannel0.png" name="iChannel0" type="cube" hidden />
+    <img src="./cubemap/px.jpg" cube="px" hidden />
+    <img src="./cubemap/nx.jpg" cube="nx" hidden />
+    <img src="./cubemap/py.jpg" cube="py" hidden />
+    <img src="./cubemap/ny.jpg" cube="ny" hidden />
+    <img src="./cubemap/pz.jpg" cube="pz" hidden />
+    <img src="./cubemap/nz.jpg" cube="nz" hidden />
+    <script type="frag"></script>
+</shader-toy>
+<script src="https://unpkg.com/kokomi.js@1.9.29/build/kokomi.umd.js"></script>
+<script>
+    fetch(`./frag.glsl?v=${Math.random()}`)
+        .then((res) => res.text())
+        .then((res) => {
+            document.querySelector('[type=frag]').textContent = res;
+            kokomi.ShaderToyElement.register();
+        })
+</script>
