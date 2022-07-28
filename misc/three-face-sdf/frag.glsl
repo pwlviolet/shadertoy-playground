@@ -340,7 +340,7 @@ vec3 getSceneColor(vec2 fragCoord){
     
     vec3 ro=vec3(0.,4.,8.);
     vec3 ta=vec3(0.,0.,0.);
-    const float fl=4.5;
+    const float fl=8.;
     
     vec2 m=iMouse.xy/iResolution.xy;
     ro.yz=rotate(ro.yz,-m.y*PI+1.);
