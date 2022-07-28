@@ -1,7 +1,11 @@
 // Ref: https://www.shadertoy.com/view/MsdBDj
 
-#define SHAPE 0
 #define AA 1// Anti-aliasing box size
+
+// consts
+const float PI=3.14159265359;
+
+const float TWO_PI=6.28318530718;
 
 // Primitives
 
@@ -28,9 +32,85 @@ float opSubtraction(float d1,float d2)
     return max(-d1,d2);
 }
 
-// Shapes
+// rotate
+mat2 rotation2d(float angle){
+    float s=sin(angle);
+    float c=cos(angle);
+    
+    return mat2(
+        c,-s,
+        s,c
+    );
+}
 
-#if SHAPE==0
+mat4 rotation3d(vec3 axis,float angle){
+    axis=normalize(axis);
+    float s=sin(angle);
+    float c=cos(angle);
+    float oc=1.-c;
+    
+    return mat4(
+        oc*axis.x*axis.x+c,oc*axis.x*axis.y-axis.z*s,oc*axis.z*axis.x+axis.y*s,0.,
+        oc*axis.x*axis.y+axis.z*s,oc*axis.y*axis.y+c,oc*axis.y*axis.z-axis.x*s,0.,
+        oc*axis.z*axis.x-axis.y*s,oc*axis.y*axis.z+axis.x*s,oc*axis.z*axis.z+c,0.,
+        0.,0.,0.,1.
+    );
+}
+
+vec2 rotate(vec2 v,float angle){
+    return rotation2d(angle)*v;
+}
+
+vec3 rotate(vec3 v,vec3 axis,float angle){
+    return(rotation3d(axis,angle)*vec4(v,1.)).xyz;
+}
+
+mat3 rotation3dX(float angle){
+    float s=sin(angle);
+    float c=cos(angle);
+    
+    return mat3(
+        1.,0.,0.,
+        0.,c,s,
+        0.,-s,c
+    );
+}
+
+vec3 rotateX(vec3 v,float angle){
+    return rotation3dX(angle)*v;
+}
+
+mat3 rotation3dY(float angle){
+    float s=sin(angle);
+    float c=cos(angle);
+    
+    return mat3(
+        c,0.,-s,
+        0.,1.,0.,
+        s,0.,c
+    );
+}
+
+vec3 rotateY(vec3 v,float angle){
+    return rotation3dY(angle)*v;
+}
+
+mat3 rotation3dZ(float angle){
+    float s=sin(angle);
+    float c=cos(angle);
+    
+    return mat3(
+        c,s,0.,
+        -s,c,0.,
+        0.,0.,1.
+    );
+}
+
+vec3 rotateZ(vec3 v,float angle){
+    return rotation3dZ(angle)*v;
+}
+
+// Shapes
 
 float sdXFace(vec2 p,float scale)
 {
@@ -93,8 +173,6 @@ float sdZFace(vec2 p,float scale)
     
     return dZFace;
 }
-
-#endif
 
 float sdThreeFace(vec3 p)
 {
@@ -185,6 +263,7 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord)
 {
     float an=.7;
     vec2 t=fragCoord/iResolution.xy*2.-1.;
+    vec2 m=iMouse.xy/iResolution.xy;
     
     t.x*=iResolution.x/iResolution.y;
     
@@ -229,6 +308,9 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord)
             
             rd.xz=mat2(cos(an),sin(an),sin(an),-cos(an))*rd.xz;
             ro.xz=mat2(cos(an),sin(an),sin(an),-cos(an))*ro.xz;
+            
+            // ro.yz=rotate(ro.yz,-m.y*PI+1.);
+            // ro.xz=rotate(ro.xz,-m.x*TWO_PI);
             
             // Get the ray directions of neighbouring pixels for this sample.
             vec3 ddx_rd=rd+dFdx(rd);
