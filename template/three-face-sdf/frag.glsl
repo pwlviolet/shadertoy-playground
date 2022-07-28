@@ -174,15 +174,15 @@ float sdZFace(vec2 p,float scale)
     return dZFace;
 }
 
-float sdThreeFace(vec3 p)
+float sdThreeFace(vec3 p,vec3 scale)
 {
-    return opIntersection(sdZFace(p.xy,.5),opIntersection(sdYFace(p.xz,.5),sdXFace(p.zy,.5)));
+    return opIntersection(sdZFace(p.xy,scale.z),opIntersection(sdYFace(p.xz,scale.y),sdXFace(p.zy,scale.x)));
 }
 
 // The signed distance field.
 float map(vec3 p)
 {
-    float dt=sdThreeFace(p);
+    float dt=sdThreeFace(p,vec3(.5));
     return dt;
 }
 
