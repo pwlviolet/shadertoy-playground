@@ -176,7 +176,7 @@ float sdZFace(vec2 p,float scale)
 
 float sdThreeFace(vec3 p)
 {
-    return min(p.y+.1,max(sdZFace(p.xy,.5),max(sdYFace(p.xz,.5),sdXFace(p.zy,.5))));
+    return opIntersection(sdZFace(p.xy,.5),opIntersection(sdYFace(p.xz,.5),sdXFace(p.zy,.5)));
 }
 
 // The signed distance field.
