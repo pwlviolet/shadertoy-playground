@@ -4,7 +4,7 @@ Super light-weight —— powered by kokomi.js
 
 食用方法：
 
-1. 用`template`目录下的子目录作为模板
+1. 以`template`目录下的子目录作为模板
 
 2. 编写`frag.glsl`
 
