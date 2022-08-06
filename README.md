@@ -1,6 +1,6 @@
 # Shader试验地
 
-Super light-weight —— powered by kokomi.js
+powered by kokomi.js
 
 食用方法：
 
