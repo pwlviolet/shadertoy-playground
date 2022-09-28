@@ -104,7 +104,9 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord)
     vec2 p=uv;
     vec2 m=iMouse.xy/iResolution.xy;
     
-    vec4 col=vec4(0.,0.,0.,1.);
+    vec3 bgColor=vec3(7.,17.,29.)/255.;
+    
+    vec4 col=vec4(bgColor,1.);
     
     p.x-=(m.x*.02);
     p.y-=(m.y*.02);
