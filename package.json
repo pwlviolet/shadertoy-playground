@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "updateIndex": "node entries/getFilesData.mjs"
+  }
+}

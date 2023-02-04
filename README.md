@@ -1,4 +1,4 @@
-# Shader试验地
+# Shader 试验地
 
 powered by kokomi.js
 
@@ -8,4 +8,4 @@ powered by kokomi.js
 
 2. 编写`frag.glsl`
 
-3. 用`http-server`或[vscode的Live Preview插件](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server)即可预览效果
+3. 用`http-server`或[vscode 的 Live Preview 插件](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server)即可预览效果
