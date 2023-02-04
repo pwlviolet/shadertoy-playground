@@ -1,6 +1,6 @@
 # Shader 试验地
 
-地址：https://shadertoy-playground.vercel.app/
+地址：https://shadertoy-playground.vercel.app/entries/
 
 powered by kokomi.js
 
