@@ -57,7 +57,6 @@ vec3 getScanColor(vec3 worldPos,vec2 uv,vec3 col){
 
 void mainImage(out vec4 fragColor,in vec2 fragCoord)
 {
-    // Normalized pixel coordinates (from 0 to 1)
     vec2 uv=fragCoord/iResolution.xy;
     uv-=.5;
     uv.x*=iResolution.x/iResolution.y;
@@ -65,10 +64,8 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord)
     vec3 worldPosition=vec3(uv.x,uv.y,0.);
     vec2 texUv=uv*10.;
     
-    // Time varying pixel color
     vec3 col=vec3(0.);
     col=getScanColor(worldPosition,texUv,col);
     
-    // Output to screen
     fragColor=vec4(col,1.);
 }
