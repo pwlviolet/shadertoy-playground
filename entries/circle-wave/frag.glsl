@@ -49,7 +49,7 @@ vec3 getScanColor(vec3 worldPos,vec2 uv,vec3 col){
     
     return col;
     // return worldPos;
-    // return scanMask;
+    // return vec3(scanMask);
     // return vec3(cw);
     // return vec3(mask1);
     // return scanCol;
