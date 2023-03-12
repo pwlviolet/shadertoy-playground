@@ -1,0 +1,19 @@
+<style>
+    body {
+        margin: 0;
+        background: black;
+    }
+</style>
+<shader-toy>
+    <img src="https://s2.loli.net/2023/01/30/MzNfVGt8Lc6hjCW.jpg" name="iChannel0" hidden />
+    <script type="frag"></script>
+</shader-toy>
+<script src="https://unpkg.com/kokomi.js/build/kokomi.umd.js"></script>
+<script>
+    fetch(`./frag.glsl?v=${Math.random()}`)
+        .then((res) => res.text())
+        .then((res) => {
+            document.querySelector('[type=frag]').textContent = res;
+            kokomi.ShaderToyElement.register();
+        })
+</script>
